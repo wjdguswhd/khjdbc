@@ -33,5 +33,17 @@ public class EmployeeController {
 			menu.displayError("해당 사번의 검색 결과가 없습니다.");
 		}
 	}
+	
+	//새로운 사원 정보 추가
+	public void insertEmployee() {
+		Employee emp = menu.insertEmployee();
+		
+		int result = empDAO.insertEmployee(emp);
+		if(result > 0) {
+			menu.displaySuccess(result + "개의 행이 추가되었습니다.");
+		}else {
+			menu.displayError("데이터 삽입 과정 중 오류 발생");
+		}
+	}
 
 }

@@ -115,4 +115,53 @@ public class EmployeeDAO {
 		return emp;
 	}
 
+	public int insertEmployee(Employee emp) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		int result = 0;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","SCOTT","SCOTT");
+			conn.setAutoCommit(false);
+			
+			//insert into emp values(9999, 'rose', 'teacher',7788,sysdate,5000,100,10)
+			//String query = "insert into emp values("+ emp.getEmpNo() + ", '"+ emp.getEmpName() +"', '"+emp.getJob()+"',"+emp.getMgr()+",sysdate,"+emp.getSal()+","+emp.getComm()+","+emp.getDeptNo()+")";
+			
+			String query = "insert into emp values(?,?,?,?,sysdate,?,?,?)";
+			
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setInt(1, emp.getEmpNo());
+	        pstmt.setString(2, emp.getEmpName());
+	        pstmt.setString(3, emp.getJob());
+	        pstmt.setInt(4, emp.getMgr());
+	        pstmt.setInt(5, emp.getSal());
+	        pstmt.setInt(6, emp.getComm());
+	        pstmt.setInt(7, emp.getDeptNo());
+	        
+	        result = pstmt.executeUpdate();
+	        if(result > 0 ) {
+	        	conn.commit();
+	        }else {
+	        	conn.rollback();
+	        }
+	
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
 }

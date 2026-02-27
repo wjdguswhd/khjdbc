@@ -31,7 +31,7 @@ public class Menu {
 			switch(user) {
 			case 1: ec.selectAll();break;
 			case 2: ec.selectEmployee();break;
-			case 3: break;
+			case 3: ec.insertEmployee();break;
 			case 4: break;
 			case 5: break;
 			case 0: System.out.println("프로그램을 종료합니다");break;
@@ -68,5 +68,37 @@ public class Menu {
 		System.out.println("커미션 : " + emp.getComm());
 		System.out.println("부서번호 : " + emp.getDeptNo());
 	}
-	
+
+	public Employee insertEmployee() {
+		System.out.println("[새로운 사원 정보 추가]");
+		
+		System.out.print("사번 : ");
+		int empNo = Integer.parseInt(sc.nextLine());
+		
+		System.out.print("이름 : ");
+		String empName = sc.nextLine();
+		
+		System.out.print("직책 :");
+		String job = sc.nextLine();
+		
+		System.out.print("직속 상사 사번 :");
+		int mgr = Integer.parseInt(sc.nextLine());
+		
+		System.out.print("급여 :");
+		int sal = Integer.parseInt(sc.nextLine());
+		
+		System.out.print("커미션 : ");
+		int comm = Integer.parseInt(sc.nextLine());
+		
+		System.out.print("부서 번호 :");
+		int deptNo = Integer.parseInt(sc.nextLine());
+		
+		Employee emp = new Employee(empNo, empName, job, mgr, sal, comm, deptNo);
+		return emp;
+		
+	}
+
+	public void displaySuccess(String string) {
+		System.out.println("서비스 요청 성공 : " + string);
+	}
 }
