@@ -45,5 +45,22 @@ public class EmployeeController {
 			menu.displayError("데이터 삽입 과정 중 오류 발생");
 		}
 	}
+	
+	//사번과 일치하는 사원의 정보 수정
+	public void updateEmployee() {
+		int empNo = menu.selectEmpNo();
+		
+		Employee emp = menu.updateEmployee();
+		emp.setEmpNo(empNo);
+		
+		int result = empDAO.updateEmployee(emp);
+		
+		if(result > 0) {
+			menu.displaySuccess(result + "개의 행이 수정되었습니다.");
+		}else {
+			menu.displayError("데이터 수정 중 오류 발생");
+		}
+		
+	}
 
 }

@@ -164,4 +164,46 @@ public class EmployeeDAO {
 		return result;
 	}
 
+	public int updateEmployee(Employee emp) {
+	
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0; 
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:orcl", "SCOTT", "SCOTT");
+			conn.setAutoCommit(false); 
+			
+			String query = "UPDATE EMP SET  JOB= ?, SAL=?, COMM=? WHERE EMPNO = ?";
+			pstmt = conn.prepareStatement(query);
+			
+	        pstmt.setString(1, emp.getJob());
+	        pstmt.setInt(2, emp.getSal());
+	        pstmt.setInt(3, emp.getComm());
+			pstmt.setInt(4, emp.getEmpNo());
+			result = pstmt.executeUpdate();
+			
+			if (result > 0) {
+				conn.commit();
+			}else {
+				conn.rollback();
+			}
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	
+		return result;
+	}
+
 }

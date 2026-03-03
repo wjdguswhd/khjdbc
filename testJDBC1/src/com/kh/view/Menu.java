@@ -32,7 +32,7 @@ public class Menu {
 			case 1: ec.selectAll();break;
 			case 2: ec.selectEmployee();break;
 			case 3: ec.insertEmployee();break;
-			case 4: break;
+			case 4: ec.updateEmployee();break;
 			case 5: break;
 			case 0: System.out.println("프로그램을 종료합니다");break;
 			default:System.out.println("잘못 입력하셨습니다");
@@ -100,5 +100,20 @@ public class Menu {
 
 	public void displaySuccess(String string) {
 		System.out.println("서비스 요청 성공 : " + string);
+	}
+
+	public Employee updateEmployee() {
+		System.out.print("직책 : ");
+		String job = sc.nextLine();
+		
+		System.out.print("급여 : ");
+		int sal = Integer.parseInt(sc.nextLine());
+		
+		System.out.print("커미션 : ");
+		int comm = Integer.parseInt(sc.nextLine());
+		
+		Employee emp = new Employee(job,sal,comm);
+		return emp;
+		
 	}
 }
