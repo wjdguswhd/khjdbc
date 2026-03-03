@@ -206,4 +206,40 @@ public class EmployeeDAO {
 		return result;
 	}
 
+	public int deleteEmployee(int empNo) {
+		Connection conn = null;
+		Statement stmt = null;
+		int result = 0;
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:orcl", "SCOTT", "SCOTT");
+			conn.setAutoCommit(false); 
+
+			
+			String query = "DELETE FROM EMP WHERE EMPNO = " + empNo;
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(query);
+			
+			if (result > 0) {
+				conn.commit();
+			}else {
+				conn.rollback();
+			}
+		}
+		catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
 }

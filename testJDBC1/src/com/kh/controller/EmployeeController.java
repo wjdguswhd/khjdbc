@@ -62,5 +62,26 @@ public class EmployeeController {
 		}
 		
 	}
+	
+	//사번으로 사원 정보 삭제
+	public void deleteEmployee() {
+		int empNo = menu.selectEmpNo();
+		char check = menu.deleteEmployee();
+		
+		if(check=='Y') {
+			int result = empDAO.deleteEmployee(empNo);
+			if(result > 0) {
+				menu.displaySuccess(result + "개의 행이 삭제되었습니다.");
+			}else {
+				menu.displayError("데이터 삭제 과정 중 오류 발생");
+			}
+		}else if(check=='N') {
+			menu.displaySuccess("사원 정보 삭제 취소");
+		}else {
+			menu.displayError("잘못 입력하셨습니다.(Y 또는 N 입력)");
+		}
+		
+		
+	}
 
 }

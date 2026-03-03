@@ -33,7 +33,7 @@ public class Menu {
 			case 2: ec.selectEmployee();break;
 			case 3: ec.insertEmployee();break;
 			case 4: ec.updateEmployee();break;
-			case 5: break;
+			case 5: ec.deleteEmployee();break;
 			case 0: System.out.println("프로그램을 종료합니다");break;
 			default:System.out.println("잘못 입력하셨습니다");
 			}
@@ -115,5 +115,11 @@ public class Menu {
 		Employee emp = new Employee(job,sal,comm);
 		return emp;
 		
+	}
+
+	public char deleteEmployee() {
+		System.out.println("정말로 삭제하시겠습니까?(Y/N) : ");
+		
+		return sc.nextLine().toUpperCase().charAt(0);
 	}
 }
