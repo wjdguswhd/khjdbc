@@ -21,4 +21,10 @@ public class MemberController {
 		}
 	}
 
+	public void insertMember() {
+		Member m = menu.insertMember();
+		
+		int result = mService.insertMember(m);
+	}
+
 }
