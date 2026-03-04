@@ -89,25 +89,70 @@ public class MemberDAO {
 	}
 
 	public ArrayList<Member> selectMemberId(Connection conn, String id) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<Member>();
 		
-		return null;
+		String query = "select * from member where member_id like '%" + id + "%'";
+		try {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				String memberId = rset.getString("member_id");
+				String memberPwd = rset.getString("member_pwd");
+				String memberName = rset.getString("member_name");
+				char gender = rset.getString("gender").charAt(0);
+				String email = rset.getString("email");
+				String phone = rset.getString("phone");
+				String address = rset.getString("address");
+				int age = rset.getInt("age");
+				Date enrollDate = rset.getDate("enroll_date");
+				
+				Member m = new Member(memberId, memberPwd,memberName,gender,email,phone,age,address,enrollDate);
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		
+		return list;
 	}
 
 	public ArrayList<Member> selectGender(Connection conn, char gen) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String query = "select gender from member where gender like ";
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		String query = "select * from member where gender = '" + gen + "'";
 
 		try {
-			pstmt = conn.prepareStatement(query);
-	        result = pstmt.executeUpdate();
-	       
-		}catch (SQLException e) {
+			stmt = conn.createStatement();
+			rset = stmt.executeQuery(query);
+			while(rset.next()) {
+				String memberId = rset.getString("member_id");
+				String memberPwd = rset.getString("member_pwd");
+				String memberName = rset.getString("member_name");
+				char gender = rset.getString("gender").charAt(0);
+				String email = rset.getString("email");
+				String phone = rset.getString("phone");
+				String address = rset.getString("address");
+				int age = rset.getInt("age");
+				Date enrollDate = rset.getDate("enroll_date");
+				
+				Member m = new Member(memberId, memberPwd,memberName,gender,email,phone,age,address,enrollDate);
+				list.add(m);
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
-			close(pstmt);
+			close(rset);
+			close(stmt);
 		}
-		return result;
-
+		return list;
 	}
 }
