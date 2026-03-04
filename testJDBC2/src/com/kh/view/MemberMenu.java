@@ -1,6 +1,7 @@
 package com.kh.view;
 
 import java.util.ArrayList;
+
 import java.util.Scanner;
 
 import com.kh.controller.MemberController;
@@ -27,7 +28,7 @@ public class MemberMenu {
 			switch(select) {
 			case 1: mc.insertMember();break;
 			case 2: mc.selectAll();break;
-			case 3: break;
+			case 3: mc.selectMember();break;
 			case 4: break;
 			case 5: break;
 			case 0: System.out.println("프로그램을 종료합니다");break;
@@ -78,6 +79,38 @@ public class MemberMenu {
 		
 		Member m = new Member(memberId, memberPwd, memberName, gender, email, phone, age, address);
 		
-		return null;
+		return m;
+	}
+
+	public void displaySuccess(String string) {
+		System.out.println("서비스 요청 성공 : " + string);
+	}
+
+	public int selectMember() {
+		int sel = 0;
+		while(true) {
+			System.out.println("1. 아이디로 회원 조회");
+			System.out.println("2. 성별로 회원 조회");
+			System.out.println("0. 메인메뉴로 돌아가기");
+			System.out.print("번호 선택 :");
+			sel = Integer.parseInt(sc.nextLine());
+			
+			switch(sel) {
+			case 1: case 2: case 3: return sel;
+			default: System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
+			}
+		}
+	}
+
+	public String inputMemberId() {
+		System.out.println("회원 아이디 : ");
+		String id = sc.nextLine()
+;		return id;
+	}
+
+	public char inputGender() {
+		System.out.println("조회할 성별 입력(M/F) : ");
+		char gen = sc.nextLine().toUpperCase().charAt(0);
+		return gen;
 	}
 }

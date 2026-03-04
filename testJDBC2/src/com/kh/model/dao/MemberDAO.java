@@ -1,13 +1,16 @@
 package com.kh.model.dao;
 
+import static com.kh.common.JDBCTemplate.close;
+
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import static com.kh.common.JDBCTemplate.close;
 import com.kh.model.vo.Member;
 
 public class MemberDAO {
@@ -58,4 +61,53 @@ public class MemberDAO {
 		return list;
 	}
 
+	public int insertMember(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "INSERT INTO MEMBER VALUES(?,?,?,?,?,?,?,?,sysdate)";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, m.getMemberId());
+	        pstmt.setString(2, m.getMemberPwd());
+	        pstmt.setString(3, m.getMemberName());
+	        pstmt.setString(4, m.getGender()+"");
+	        pstmt.setString(5, m.getEmail());
+	        pstmt.setString(6, m.getPhone());
+	        pstmt.setString(7, m.getAddress());
+	        pstmt.setInt(8, m.getAge());
+	        
+	        result = pstmt.executeUpdate();
+	       
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+
+	}
+
+	public ArrayList<Member> selectMemberId(Connection conn, String id) {
+		
+		return null;
+	}
+
+	public ArrayList<Member> selectGender(Connection conn, char gen) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "select gender from member where gender like ";
+
+		try {
+			pstmt = conn.prepareStatement(query);
+	        result = pstmt.executeUpdate();
+	       
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+
+	}
 }
