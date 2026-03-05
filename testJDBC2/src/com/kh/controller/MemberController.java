@@ -55,4 +55,61 @@ public class MemberController {
 		}
 	}
 
+	public void updateMember() {
+		String memberId = menu.inputMemberId();
+		
+		int check = mService.checkMember(memberId);
+		if(check !=1) {
+			menu.displayError("입력한 아이디가 존재하지 않습니다.");
+		}else {
+			int sel = menu.updateMember();
+			
+			if(sel == 0) {
+				return;
+			}
+			String input = menu.inputUpdate();
+			String upStr = null;
+			switch(sel) {
+			case 1: upStr = "MEMBER_PWD";break;
+			case 2: upStr = "EMAIL";break;
+			case 3: upStr = "PHONE";break;
+			case 4: upStr = "ADDRESS";
+			}
+			
+			int result = mService.updateMember(memberId,upStr,input);
+			if(result > 0) {
+				menu.displaySuccess(result + "개의 행이 수정되었습니다.");
+			}else {
+				menu.displayError("데이터 수정 과정 중 오류 발생");
+			}
+		}
+	}
+
+	public void deleteMember() {
+		String memberId = menu.inputMemberId();
+		
+		int check = mService.checkMember(memberId);
+		if(check != 1) {
+			menu.displayError("입력한 아이디가 존재하지 않습니다.");
+		}else {
+			String yn = menu.checkDelete();
+			if(yn.equalsIgnoreCase("y")){
+				int result = mService.deleteMember(memberId);
+				if(result > 0) {
+					menu.displaySuccess(result + "개의 행이 삭제되었습니다.");
+				}else {
+					menu.displayError("데이터 삭제 과정 중 오류 발생");
+				}
+			}else if(yn.equalsIgnoreCase("N")) {
+				return;
+			}else {
+				menu.displayError("잘못 입력하셨습니다. Y 또는 N을 입력해주세요.");
+			}
+		}
+	}
+
+	public void exitProgram() {
+		mService.exitProgram();
+	}
+
 }
